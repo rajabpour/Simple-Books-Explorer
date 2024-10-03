@@ -51,6 +51,7 @@ class SearchViewModel {
             self.books.append(book)
         }
     }
+    
     func getBook(at index: Int) -> Book? {
         guard index >= 0 && index < books.count else {
             return nil

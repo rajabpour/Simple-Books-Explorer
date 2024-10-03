@@ -89,10 +89,8 @@ class SearchViewController: BaseViewController {
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        // اگر تایمری در حال اجرا بود، آن را متوقف کنید
         searchTimer?.invalidate()
         
-        // ایجاد یک تایمر جدید با ۸۰۰ میلی‌ثانیه تأخیر
         searchTimer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: false) { [weak self] _ in
             self?.searchAction(query: searchText)
         }

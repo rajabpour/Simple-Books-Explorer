@@ -57,10 +57,10 @@ extension Books_ExplorerTests {
         let searchVC = SearchViewController()
         searchVC.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "BookCell")
 
-        searchVC.viewModel.books = [
+        searchVC.viewModel.addBooks(books: [
             Book(id: "/works/OL12345W", title: "Sample Book Title", authorName: ["Author One"], firstPublishYear: 2000, coverId: 12345),
             Book(id: "/works/OL67890W", title: "Another Book Title", authorName: ["Author Two"], firstPublishYear: 2005, coverId: 67890)
-        ]
+        ])
         
         searchVC.loadViewIfNeeded()
         
@@ -86,7 +86,7 @@ extension Books_ExplorerTests {
         
         // Wait for the API request to complete
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            XCTAssertGreaterThan(searchVC.viewModel.books.count, 0, "Expected at least one book after search")
+            XCTAssertGreaterThan(searchVC.viewModel.numberOfBooks(), 0, "Expected at least one book after search")
             expectation.fulfill()
         }
         

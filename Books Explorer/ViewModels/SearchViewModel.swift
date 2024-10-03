@@ -10,7 +10,7 @@ import Foundation
 class SearchViewModel {
     
     // MARK: - Properties
-    var books: [Book] = []
+    private var books: [Book] = []
     var onBooksUpdated: (() -> Void)?
     var onError: ((String) -> Void)?
     var onLoadingStateChanged: ((Bool) -> Void)?
@@ -46,6 +46,11 @@ class SearchViewModel {
         }
     }
     
+    func addBooks(books:[Book]) {
+        books.forEach { book in
+            self.books.append(book)
+        }
+    }
     func getBook(at index: Int) -> Book? {
         guard index >= 0 && index < books.count else {
             return nil

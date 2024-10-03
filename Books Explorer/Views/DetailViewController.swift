@@ -22,6 +22,7 @@ class DetailViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.accessibilityIdentifier = "DetailView"
         setupUI()
     }
     
@@ -32,8 +33,9 @@ class DetailViewController: BaseViewController {
     
     func setupUI() {
         let titleLabel = UILabel()
-        titleLabel.text = "Title: \(book.title)"
+        titleLabel.text = "\(book.title)"
         titleLabel.numberOfLines = 0
+        titleLabel.accessibilityIdentifier = "BookTitleLabel"
         
         let authorLabel = UILabel()
         authorLabel.text = "Author: \(book.authorName?.joined(separator: ", ") ?? "N/A")"

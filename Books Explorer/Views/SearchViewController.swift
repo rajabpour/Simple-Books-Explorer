@@ -25,7 +25,7 @@ class SearchViewController: BaseViewController {
         title = "Books Explorer"
         
         searchBar.delegate = self
-        searchBar.accessibilityIdentifier = "Search"
+        searchBar.searchTextField.accessibilityIdentifier = "Search"
         navigationItem.titleView = searchBar
 
         tableView.accessibilityIdentifier = "BooksTableView"
@@ -107,29 +107,29 @@ extension SearchViewController: UISearchBarDelegate {
 
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.books.count == 0 ? 1 : viewModel.books.count
+        return viewModel.numberOfBooks() == 0 ? 1 : viewModel.numberOfBooks()
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if viewModel.books.count == 0 {
+        if viewModel.numberOfBooks() == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "EmptyCell", for: indexPath)
             cell.textLabel?.text = "No Item founded!\nPlease do a new search from the search bar."
             cell.textLabel?.numberOfLines = 3
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "BookCell", for: indexPath)
-        cell.textLabel?.text = viewModel.books[indexPath.row].title
+        cell.textLabel?.text = viewModel.getBook(at: indexPath.row)?.title ?? ""
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let book = viewModel.books[indexPath.row]
+        guard let book = viewModel.getBook(at: indexPath.row) else {return}
         let detailVC = DetailViewController(book: book)
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if viewModel.books.count == 0 {
+        if viewModel.numberOfBooks() == 0 {
             return 200
         }
         else {
